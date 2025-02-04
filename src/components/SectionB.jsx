@@ -62,8 +62,7 @@ const SectionB = ({ sectionBRef, sectionCRef }) => {
             {logos.map((logo, index) => (
               <motion.div
                 key={`row1-${index}`}
-                className="flex-shrink-0 bg-white rounded-lg p-4 w-40 h-28 flex items-center justify-center hover:shadow-lg transform hover:scale-105 transition-transform duration-300"
-                whileHover={{ y: -5 }}
+                className="flex-shrink-0 bg-white rounded-lg p-4 w-40 h-28 flex items-center justify-center"
               >
                 <img
                   src={logo.src}
@@ -90,8 +89,7 @@ const SectionB = ({ sectionBRef, sectionCRef }) => {
             {logos.map((logo, index) => (
               <motion.div
                 key={`row2-${index}`}
-                className="flex-shrink-0 bg-white rounded-lg p-4 w-40 h-28 flex items-center justify-center hover:shadow-lg transform hover:scale-105 transition-transform duration-300"
-                whileHover={{ y: -5 }}
+                className="flex-shrink-0 bg-white rounded-lg p-4 w-40 h-28 flex items-center justify-center"
               >
                 <img
                   src={logo.src}
