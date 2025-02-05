@@ -19,12 +19,12 @@ const HeroSection = ({ heroRef }) => {
       />
 
       {/* Content */}
-      <div className="relative z-10 text-center">
-        <h1 className="text-6xl text-white font-bold mb-4 text-shadow-lg">Welcome to MasterChillers</h1>
-        <p className="text-xl text-white text-shadow">Your Ultimate Destination for Cooling Solutions</p>
+      <div className="relative z-10 text-center px-4 sm:px-6 md:px-8">
+        <h1 className="text-4xl sm:text-6xl text-white font-bold mb-4 text-shadow-lg">Welcome to MasterChillers</h1>
+        <p className="text-lg sm:text-xl text-white text-shadow">Your Ultimate Destination for Cooling Solutions</p>
       </div>
     </section>
   );
 };
 
-export default HeroSection; 
+export default HeroSection;
