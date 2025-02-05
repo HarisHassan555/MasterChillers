@@ -7,6 +7,8 @@
   --primary-dark: #0284C7;
   --secondary: #1E293B;  /* Slate dark - background */
   --accent: #38BDF8;     /* Light blue - accents */
+  --accent-red: #EF4444; /* Red accent color */
+  --accent-red-dark: #DC2626; /* Darker red for hover states */
 }
 
 @layer base {
@@ -17,8 +19,9 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2.5 px-6 rounded-lg 
-    transition-all duration-300 transform hover:scale-105 hover:shadow-lg flex items-center justify-center gap-2;
+    @apply bg-red-500 hover:bg-red-600 text-white font-semibold 
+    py-2.5 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg 
+    flex items-center justify-center gap-2;
   }
 
   .input-field {
@@ -43,11 +46,16 @@
   }
 
   .card {
-    @apply bg-slate-800 rounded-xl shadow-xl p-6 transition-transform duration-300 hover:scale-[1.02];
+    @apply bg-slate-800 rounded-xl shadow-xl p-6 transition-transform duration-300 hover:scale-[1.02]
+    hover:shadow-[0_0_15px_rgba(239,68,68,0.1)]; /* Subtle red glow on hover */
   }
 
   .text-gradient {
-    @apply bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent;
+    @apply text-red-500;
+  }
+
+  .accent-border {
+    @apply border-l-4 border-red-500;
   }
 }
 
@@ -65,6 +73,19 @@
   animation: float 3s ease-in-out infinite;
 }
 
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
@@ -80,4 +101,10 @@
 
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-slate-600;
+}
+
+@layer utilities {
+  #curvyPath {
+    transition: stroke-dashoffset 0.1s ease-out;
+  }
 }

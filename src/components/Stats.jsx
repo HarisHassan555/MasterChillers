@@ -44,8 +44,10 @@ const Counter = ({ end, duration = 1 }) => {
         animate={controls}
         transition={{ duration: 0.3 }}
       >
-        <span className="text-5xl font-bold text-sky-400">{count}</span>
-        {end === 200 && <span className="text-5xl font-bold text-sky-400">+</span>}
+        <span className="text-red-500 text-5xl font-bold">
+          {count}
+        </span>
+        {end === 200 && <span className="text-red-500 text-5xl font-bold">+</span>}
       </motion.div>
     </div>
   );

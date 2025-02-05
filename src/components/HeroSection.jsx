@@ -1,5 +1,5 @@
 import React from 'react';
-import mc6 from '../assets/MC-img/mc6.jpg';
+import mc1 from '../assets/MC-img/mc1.jpg';
 
 const HeroSection = ({ heroRef }) => {
   return (
@@ -11,7 +11,7 @@ const HeroSection = ({ heroRef }) => {
       <div 
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: `linear-gradient(to bottom, rgba(17, 24, 39, 0.5), rgba(17, 24, 39, 0.5)), url(${mc6})`,
+          backgroundImage: `linear-gradient(to bottom, rgba(17, 24, 39, 0.5), rgba(17, 24, 39, 0.5)), url(${mc1})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'

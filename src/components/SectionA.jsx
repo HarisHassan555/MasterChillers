@@ -3,13 +3,61 @@ import { motion, AnimatePresence } from 'framer-motion';
 import mc7 from '../assets/MC-img/mc7.jpg';
 import mc1 from '../assets/MC-img/mc1.jpg';
 import mc8 from '../assets/MC-img/mc8.jpg';
+import mc5 from '../assets/MC-img/mc5.jpg';
+import mc6 from '../assets/MC-img/mc6.jpg';
 import mc11 from '../assets/MC-img/mc11.jpg';
 import mc12 from '../assets/MC-img/mc12.jpg';
 import mc13 from '../assets/MC-img/mc13.jpg';
 import Stats from './Stats';
 
+// Update the CurvyLines component
+const CurvyLines = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <svg
+      className="absolute w-full h-full"
+      viewBox="0 0 1200 2000"
+      preserveAspectRatio="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M600,200 
+           C500,300 200,400 400,600 
+           C600,800 800,700 600,900 
+           C400,1100 200,1000 400,1300
+           C600,1500 800,1400 600,1600"
+        className="stroke-red-500/70 stroke-[10px] fill-none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        pathLength="1"
+        style={{
+          strokeDasharray: 1,
+          strokeDashoffset: 1,
+        }}
+        id="curvyPath"
+      />
+    </svg>
+  </div>
+);
+
+// Add this scroll-based animation hook
+const useScrollBasedAnimation = () => {
+  useEffect(() => {
+    const path = document.querySelector('#curvyPath');
+    if (!path) return;
+
+    const handleScroll = () => {
+      const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight));
+      const drawLength = Math.max(0, Math.min(1, scrollPercentage * 2)); // Multiply by 2 to complete drawing earlier
+      path.style.strokeDashoffset = 1 - drawLength;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+};
+
 const ServiceCard = ({ title, description, features, images, isReversed }) => {
-  const containerClass = `flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 mb-20`;
+  const containerClass = `flex flex-col ${isReversed ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 mb-20 relative z-10`;
 
   return (
     <motion.div 
@@ -27,7 +75,7 @@ const ServiceCard = ({ title, description, features, images, isReversed }) => {
         <ul className="space-y-3">
           {features.map((feature, index) => (
             <li key={index} className="flex items-center text-gray-300">
-              <span className="text-sky-500 mr-2">
+              <span className="text-red-500 mr-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
@@ -93,6 +141,9 @@ const SectionA = ({ sectionARef }) => {
     return () => clearInterval(marqueeInterval);
   }, []);
 
+  // Add the hook to enable scroll-based animation
+  useScrollBasedAnimation();
+
   const services = [
     {
       title: "Rental Chiller Cabinet",
@@ -103,7 +154,7 @@ const SectionA = ({ sectionARef }) => {
         "Multiple size options available",
         "24/7 technical support"
       ],
-      images: [mc7, mc1, mc8]
+      images: [mc7, mc5, mc8]
     },
     {
       title: "Soundless Generator",
@@ -114,7 +165,7 @@ const SectionA = ({ sectionARef }) => {
         "Available in various power outputs",
         "Automatic voltage regulation"
       ],
-      images: mc1
+      images: mc6
     },
     {
       title: "Portable Outdoor Marquees",
@@ -130,8 +181,10 @@ const SectionA = ({ sectionARef }) => {
   ];
 
   return (
-    <section ref={sectionARef} className="section-padding bg-slate-900">
-      <div className="container-width">
+    <section ref={sectionARef} className="section-padding bg-slate-900 relative">
+      <CurvyLines />
+      
+      <div className="container-width relative z-10">
         <div className="text-center mb-16">
           <h2 className="heading-primary text-gradient">Our Services</h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">

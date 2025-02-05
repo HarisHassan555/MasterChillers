@@ -8,6 +8,7 @@ import nishatLogo from '../assets/nishatLogo.png';
 import sapphireLogo from '../assets/sapphireLogo.png';
 import highnoonLogo from '../assets/highnoonLogo.png';
 import dhlLogo from '../assets/dhlLogo.png';
+import pepsicoLogo from '../assets/pepsicoLogo.jpeg';
 import ClientReviewSection from './ClientReviewSection';
 
 const SectionB = ({ sectionBRef, sectionCRef }) => {
@@ -20,6 +21,7 @@ const SectionB = ({ sectionBRef, sectionCRef }) => {
     { src: sapphireLogo, alt: 'Sapphire Logo' },
     { src: highnoonLogo, alt: 'Highnoon Logo' },
     { src: dhlLogo, alt: 'DHL Logo' },
+    { src: pepsicoLogo, alt: 'Pepsico Logo' },
   ];
 
   // Calculate total width for animation
