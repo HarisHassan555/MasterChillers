@@ -52,6 +52,8 @@ const SuccessModal = ({ isOpen, onClose }) => {
 const SectionC = ({ sectionCRef }) => {
   const [formData, setFormData] = useState({
     name: '',
+    companyName: '',
+    designation: '',
     email: '',
     phone: '',
     service: 'chiller',
@@ -75,6 +77,8 @@ const SectionC = ({ sectionCRef }) => {
     // Optional: Reset form
     setFormData({
       name: '',
+      companyName: '',
+      designation: '',
       email: '',
       phone: '',
       service: 'chiller',
@@ -121,36 +125,62 @@ const SectionC = ({ sectionCRef }) => {
             </div>
 
             {/* Right Column - Contact Form */}
-            <div className="card border border-slate-700/50">
+            <div className="card border border-slate-700/50 p-6">
               <div className="mb-6">
                 <h3 className="text-2xl text-white font-bold mb-2">Schedule Your Free Consultation</h3>
                 <p className="text-gray-400">Fill out the form below and we'll get back to you within 24 hours</p>
               </div>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Name and Phone Row */}
                 <div className="grid lg:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="name" className="block text-gray-300 text-sm mb-2">Full Name*</label>
+                    <label htmlFor="name" className="block text-gray-300 text-sm mb-1">Full Name*</label>
                     <input
                       type="text"
                       id="name"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="input-field"
+                      className="input-field text-sm py-2"
                       required
                     />
                   </div>
                   <div>
-                    <label htmlFor="phone" className="block text-gray-300 text-sm mb-2">Phone Number*</label>
+                    <label htmlFor="phone" className="block text-gray-300 text-sm mb-1">Phone Number*</label>
                     <input
                       type="tel"
                       id="phone"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="input-field"
+                      className="input-field text-sm py-2"
                       required
+                    />
+                  </div>
+                </div>
+
+                {/* Company Name and Designation Row */}
+                <div className="grid lg:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="companyName" className="block text-gray-300 text-sm mb-1">Company Name</label>
+                    <input
+                      type="text"
+                      id="companyName"
+                      name="companyName"
+                      value={formData.companyName}
+                      onChange={handleChange}
+                      className="input-field text-sm py-2"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="designation" className="block text-gray-300 text-sm mb-1">Designation</label>
+                    <input
+                      type="text"
+                      id="designation"
+                      name="designation"
+                      value={formData.designation}
+                      onChange={handleChange}
+                      className="input-field text-sm py-2"
                     />
                   </div>
                 </div>
@@ -158,25 +188,24 @@ const SectionC = ({ sectionCRef }) => {
                 {/* Email and Service Row */}
                 <div className="grid lg:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor="email" className="block text-gray-300 text-sm mb-2">Email Address*</label>
+                    <label htmlFor="email" className="block text-gray-300 text-sm mb-1">Email Address</label>
                     <input
                       type="email"
                       id="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="input-field"
-                      required
+                      className="input-field text-sm py-2"
                     />
                   </div>
                   <div>
-                    <label htmlFor="service" className="block text-gray-300 text-sm mb-2">Service Interested In*</label>
+                    <label htmlFor="service" className="block text-gray-300 text-sm mb-1">Service Interested In*</label>
                     <select
                       id="service"
                       name="service"
                       value={formData.service}
                       onChange={handleChange}
-                      className="input-field"
+                      className="input-field text-sm py-2"
                       required
                     >
                       <option value="chiller">Chiller Rental</option>
@@ -188,21 +217,21 @@ const SectionC = ({ sectionCRef }) => {
 
                 {/* Message Field */}
                 <div>
-                  <label htmlFor="message" className="block text-gray-300 text-sm mb-2">Additional Details</label>
+                  <label htmlFor="message" className="block text-gray-300 text-sm mb-1">Additional Details</label>
                   <textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    rows="4"
+                    rows="3"
                     placeholder="Tell us about your requirements..."
-                    className="input-field"
+                    className="input-field text-sm py-2"
                   ></textarea>
                 </div>
 
-                <button type="submit" className="btn-primary w-full">
+                <button type="submit" className="btn-primary w-full text-sm py-2">
                   <span>Get Free Estimate</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </button>
@@ -298,7 +327,7 @@ const ContactContent = ({ type }) => {
     case 'Hours':
       return (
         <>
-          <p className="text-gray-300">Monday - Saturday: 9:00 AM - 6:00 PM</p>
+          <p className="text-gray-300">Monday - Saturday: 8:00 AM - 10:00 PM</p>
           <p className="text-gray-300">Sunday: Closed</p>
         </>
       );
@@ -307,4 +336,4 @@ const ContactContent = ({ type }) => {
   }
 };
 
-export default SectionC; 
+export default SectionC;

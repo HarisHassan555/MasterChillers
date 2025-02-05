@@ -23,13 +23,13 @@ const Navbar = ({ activeSection, scrollToSection, refs }) => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-sm border-b border-slate-800">
       <div className="container-width">
-        <div className="flex items-center justify-between h-16 px-4">
+        <div className="flex items-center justify-between h-14 px-4">
           {/* Logo */}
           <img 
             src={mclogo}
             alt="Master Chillers Logo"
             onClick={() => handleNavClick(refs.heroRef, 'hero')}
-            className="cursor-pointer hover:opacity-75 transition-opacity duration-300 w-14 h-14"
+            className="cursor-pointer hover:opacity-75 transition-opacity duration-300 w-10 h-10"
           />
 
           {/* Desktop Navigation */}

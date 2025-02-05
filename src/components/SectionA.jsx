@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import mc7 from '../assets/MC-img/mc7.jpg';
 import mc1 from '../assets/MC-img/mc1.jpg';
 import mc8 from '../assets/MC-img/mc8.jpg';
@@ -146,8 +146,8 @@ const SectionA = ({ sectionARef }) => {
 
   const services = [
     {
-      title: "Rental Chiller Cabinet",
-      description: "Our premium rental chiller cabinets provide the perfect solution for your temporary cooling needs. Whether you're hosting an event or need backup cooling solutions, our cabinets offer:",
+      title: "Rental Chiller",
+      description: "Our premium rental chillers provide the perfect solution for your temporary cooling needs. Whether you're hosting an event or need backup cooling solutions, our chillers offer:",
       features: [
         "Temperature range from -5°C to +10°C",
         "Energy-efficient operation",
@@ -155,6 +155,17 @@ const SectionA = ({ sectionARef }) => {
         "24/7 technical support"
       ],
       images: [mc7, mc5, mc8]
+    },
+    {
+      title: "Rental Cabinet",
+      description: "Our rental cabinets are designed to store and display your products in a temperature-controlled environment. Ideal for events, exhibitions, and temporary setups.",
+      features: [
+        "Durable and secure design",
+        "Adjustable shelving options",
+        "Easy to transport and install",
+        "Available in various sizes"
+      ],
+      images: [mc1, mc5, mc8]
     },
     {
       title: "Soundless Generator",
@@ -206,4 +217,4 @@ const SectionA = ({ sectionARef }) => {
   );
 };
 
-export default SectionA; 
+export default SectionA;
