@@ -259,7 +259,7 @@ const SectionC = ({ sectionCRef }) => {
             </div>
 
             {/* Contact Details */}
-            <div className="card h-[400px] flex flex-col">
+            <div className="card flex flex-col pb-2">
               <h3 className="heading-secondary">Contact Information</h3>
               
               <div className="flex-1 flex flex-col justify-between">

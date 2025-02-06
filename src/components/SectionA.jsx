@@ -147,11 +147,12 @@ const SectionA = ({ sectionARef }) => {
   const services = [
     {
       title: "Rental Chiller",
-      description: "Our premium rental chillers provide the perfect solution for your temporary cooling needs. Whether you're hosting an event or need backup cooling solutions, our chillers offer:",
+      description: "Our premium rental chillers, including water-cooled chillers, provide the perfect solution for your temporary cooling needs. Whether you're hosting an event or need backup cooling solutions, our chillers offer:",
       features: [
         "Temperature range from -5°C to +10°C",
         "Energy-efficient operation",
         "Multiple size options available",
+        "Water-cooled and air-cooled options",
         "24/7 technical support"
       ],
       images: [mc7, mc5, mc8]
