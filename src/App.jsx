@@ -1,3 +1,4 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
@@ -6,6 +7,9 @@ import SectionA from "./components/SectionA";
 import SectionB from "./components/SectionB";
 import SectionC from "./components/SectionC";
 import Footer from "./components/Footer";
+import Admin from "./components/Admin";
+import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [activeSection, setActiveSection] = useState('hero');
@@ -53,14 +57,36 @@ function App() {
   }, []);
 
   return (
-    <div className="relative">
-      <Navbar activeSection={activeSection} scrollToSection={scrollToSection} refs={refs} />
-      <HeroSection heroRef={heroRef} />
-      <SectionA sectionARef={sectionARef} />
-      <SectionB sectionBRef={sectionBRef} sectionCRef={sectionCRef} />
-      <SectionC sectionCRef={sectionCRef} />
-      <Footer />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <>
+              <Navbar
+                activeSection={activeSection}
+                refs={refs}
+                scrollToSection={scrollToSection}
+              />
+              <HeroSection heroRef={heroRef} />
+              <SectionA sectionARef={sectionARef} />
+              <SectionB sectionBRef={sectionBRef} />
+              <SectionC sectionCRef={sectionCRef} />
+              <Footer />
+            </>
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 

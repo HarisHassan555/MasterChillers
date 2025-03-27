@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { db } from '../firebase/config';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const SuccessModal = ({ isOpen, onClose }) => {
   return (
@@ -61,6 +63,8 @@ const SectionC = ({ sectionCRef }) => {
   });
 
   const [showModal, setShowModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -69,21 +73,41 @@ const SectionC = ({ sectionCRef }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log(formData);
-    setShowModal(true);
-    // Optional: Reset form
-    setFormData({
-      name: '',
-      companyName: '',
-      designation: '',
-      email: '',
-      phone: '',
-      service: 'chiller',
-      message: ''
-    });
+    setIsSubmitting(true);
+    setError(null);
+    
+    // Add basic validation
+    if (!formData.name || !formData.phone) {
+      setError('Name and Phone are required fields');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const submissionData = {
+        ...formData,
+        timestamp: serverTimestamp()
+      };
+
+      await addDoc(collection(db, 'submissions'), submissionData);
+      setShowModal(true);
+      setFormData({
+        name: '',
+        companyName: '',
+        designation: '',
+        email: '',
+        phone: '',
+        service: 'chiller',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setError('There was an error submitting your form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -229,13 +253,26 @@ const SectionC = ({ sectionCRef }) => {
                   ></textarea>
                 </div>
 
-                <button type="submit" className="btn-primary w-full text-sm py-2">
-                  <span>Get Free Estimate</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                <button 
+                  type="submit" 
+                  className="btn-primary w-full text-sm py-2"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <span>Submitting...</span>
+                  ) : (
+                    <>
+                      <span>Get Free Estimate</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </>
+                  )}
                 </button>
               </form>
+              {error && (
+                <p className="text-red-500 mt-2 text-sm">{error}</p>
+              )}
             </div>
           </div>
 
