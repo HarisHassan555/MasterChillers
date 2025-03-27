@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 
 const ProtectedRoute = ({ children }) => {
@@ -9,8 +9,8 @@ const ProtectedRoute = ({ children }) => {
   
   useEffect(() => {
     const auth = getAuth();
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
       setLoading(false);
     });
 
@@ -29,8 +29,8 @@ const ProtectedRoute = ({ children }) => {
   }
 
   if (!user) {
-    // Redirect to login page but save the attempted URL
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    // Save the attempted URL
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
   return children;

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import Admin from "./components/Admin";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from './components/NotFound';
 
 function App() {
   const [activeSection, setActiveSection] = useState('hero');
@@ -85,6 +86,7 @@ function App() {
             </>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
