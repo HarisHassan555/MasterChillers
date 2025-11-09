@@ -351,21 +351,28 @@ const ContactContent = ({ type }) => {
       return <p className="text-gray-300">Bank Stop, Street # 3 Umar Park, Hakim Chock, Lahore – Kasur Rd, Lahore, Pakistan</p>;
     case 'Phone':
       return (
+        <div className=" flex flex-col gap-2">
+        
         <a href="tel:+923214260222" className="text-gray-300 hover:text-sky-400 transition-colors duration-300">
           +92 3214849700
         </a>
+         <a href="tel:+923394849700" className="text-gray-300 hover:text-sky-400 transition-colors duration-300">
+         +92 3394849700
+       </a>
+       </div>
+        
       );
     case 'Email':
       return (
-        <a href="mailto:contact@masterchillers.com" className="text-gray-300 hover:text-sky-400 transition-colors duration-300">
-          contact@masterchillers.com
+        <a href="mailto:masterchiller2001@gmail.com" className="text-gray-300 hover:text-sky-400 transition-colors duration-300">
+          masterchiller2001@gmail.com
         </a>
       );
     case 'Hours':
       return (
         <>
-          <p className="text-gray-300">Monday - Saturday: 8:00 AM - 10:00 PM</p>
-          <p className="text-gray-300">Sunday: Closed</p>
+          <p className="text-gray-300">24 hours open</p>
+          
         </>
       );
     default:

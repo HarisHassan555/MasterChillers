@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import mc17 from '../assets/MC-img/mc17.jpg';
+import mc16 from '../assets/MC-img/mc16.jpg';
 import mc7 from '../assets/MC-img/mc7.jpg';
 import mc1 from '../assets/MC-img/mc1.jpg';
 import mc8 from '../assets/MC-img/mc8.jpg';
 import mc5 from '../assets/MC-img/mc5.jpg';
-import mc6 from '../assets/MC-img/mc6.jpg';
+import mc18 from '../assets/MC-img/mc18.jpg';
 import mc11 from '../assets/MC-img/mc11.jpg';
 import mc12 from '../assets/MC-img/mc12.jpg';
 import mc13 from '../assets/MC-img/mc13.jpg';
+import mc19 from '../assets/MC-img/mc19.jpg';
+import mc20 from '../assets/MC-img/mc20.PNG';
+import mc21 from '../assets/MC-img/mc21.jpeg';
 import Stats from './Stats';
 
 // Update the CurvyLines component
@@ -149,13 +154,13 @@ const SectionA = ({ sectionARef }) => {
       title: "Rental Chiller",
       description: "Our premium rental chillers, including water-cooled chillers, provide the perfect solution for your temporary cooling needs. Whether you're hosting an event or need backup cooling solutions, our chillers offer:",
       features: [
-        "Temperature range from -5°C to +10°C",
+        "Temperature range from 18°C to 24°C",
         "Energy-efficient operation",
         "Multiple size options available",
         "Water-cooled and air-cooled options",
         "24/7 technical support"
       ],
-      images: [mc7, mc5, mc8]
+      images: [mc16, mc17, mc8]
     },
     {
       title: "Rental Cabinet",
@@ -166,7 +171,7 @@ const SectionA = ({ sectionARef }) => {
         "Easy to transport and install",
         "Available in various sizes"
       ],
-      images: [mc1, mc5, mc8]
+      images: [mc19, mc20, mc21]
     },
     {
       title: "Soundless Generator",
@@ -177,7 +182,7 @@ const SectionA = ({ sectionARef }) => {
         "Available in various power outputs",
         "Automatic voltage regulation"
       ],
-      images: mc6
+      images: mc18
     },
     {
       title: "Portable Outdoor Marquees",

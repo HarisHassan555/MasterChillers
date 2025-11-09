@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
@@ -11,8 +11,10 @@ import Admin from "./components/Admin";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from './components/NotFound';
+import Countdown from './components/Countdown';
 
-function App() {
+function AppContent() {
+  const location = useLocation();
   const [activeSection, setActiveSection] = useState('hero');
   const heroRef = useRef(null);
   const sectionARef = useRef(null);
@@ -57,8 +59,12 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Show countdown only on main route
+  const showCountdown = location.pathname === '/';
+
   return (
-    <Router>
+    <>
+      {showCountdown && <Countdown />}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route
@@ -88,6 +94,14 @@ function App() {
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }

@@ -25,12 +25,19 @@ const Navbar = ({ activeSection, scrollToSection, refs }) => {
       <div className="container-width">
         <div className="flex items-center justify-between h-14 px-4">
           {/* Logo */}
-          <img 
-            src={mclogo}
-            alt="Master Chillers Logo"
+          <div
+            className="flex items-center space-x-3 cursor-pointer"
             onClick={() => handleNavClick(refs.heroRef, 'hero')}
-            className="cursor-pointer hover:opacity-75 transition-opacity duration-300 w-10 h-10"
-          />
+          >
+            <img
+              src={mclogo}
+              alt="Master Chillers Logo"
+              className="hover:opacity-75 transition-opacity duration-300 w-10 h-10"
+            />
+            <span className="text-sm font-medium transition-colors duration-300 text-gray-300 hover:text-white select-none tracking-wide">
+              Master Chillers
+            </span>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
