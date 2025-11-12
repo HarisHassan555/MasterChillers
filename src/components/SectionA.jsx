@@ -11,8 +11,8 @@ import mc11 from '../assets/MC-img/mc11.jpg';
 import mc12 from '../assets/MC-img/mc12.jpg';
 import mc13 from '../assets/MC-img/mc13.jpg';
 import mc19 from '../assets/MC-img/mc19.jpg';
-import mc20 from '../assets/MC-img/mc20.PNG';
-import mc21 from '../assets/MC-img/mc21.jpeg';
+import mc20 from '../assets/MC-img/mc20.jpg';
+import mc21 from '../assets/MC-img/mc21.jpg';
 import Stats from './Stats';
 
 // Update the CurvyLines component
@@ -93,25 +93,25 @@ const ServiceCard = ({ title, description, features, images, isReversed }) => {
       {Array.isArray(images) ? (
         <div className="w-full md:w-1/2">
           <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2">
+            <div className="col-span-2 overflow-hidden rounded-lg">
               <img 
                 src={images[0]} 
                 alt={`${title} Main`}
-                className="w-full h-64 object-cover rounded-lg shadow-xl hover:scale-[1.02] transition-transform duration-300"
+                className={`w-full h-64 object-cover shadow-xl transition-transform duration-300 ${[mc20, mc21].includes(images[0]) ? 'scale-110 hover:scale-[1.12]' : 'hover:scale-[1.02]'}`}
               />
             </div>
-            <div>
+            <div className="overflow-hidden rounded-lg">
               <img 
                 src={images[1]} 
                 alt={`${title} Secondary`}
-                className="w-full h-40 object-cover rounded-lg shadow-xl hover:scale-[1.02] transition-transform duration-300"
+                className={`w-full h-40 object-cover shadow-xl transition-transform duration-300 ${[mc20, mc21].includes(images[1]) ? 'scale-110 hover:scale-[1.12]' : 'hover:scale-[1.02]'}`}
               />
             </div>
-            <div>
+            <div className="overflow-hidden rounded-lg">
               <img 
                 src={images[2]} 
                 alt={`${title} Tertiary`}
-                className="w-full h-40 object-cover rounded-lg shadow-xl hover:scale-[1.02] transition-transform duration-300"
+                className={`w-full h-40 object-cover shadow-xl transition-transform duration-300 ${[mc20, mc21].includes(images[2]) ? 'scale-110 hover:scale-[1.12]' : 'hover:scale-[1.02]'}`}
               />
             </div>
           </div>

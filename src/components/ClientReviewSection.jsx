@@ -1,41 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import havalLogo from '../assets/havalLogo.jpg';
 
 const ClientReviewSection = () => {
   const reviews = [
     {
       id: 1,
       name: "Imran Hanif",
-      image: havalLogo,
       rating: 5,
       review: "I needed chiller services on an urgent basis and I searched them online. I asked for chiller services the very next day without pre-booking, and they arranged chillers at very short notice and saved my day. I recommend Master Chiller Lahore."
     },
     {
       id: 2,
       name: "Abdul Moin",
-      image: havalLogo,
       rating: 4,
       review: "Very big warehouse. Great service and support from Master Chillers."
     },
     {
       id: 3,
       name: "Life with Gadgets",
-      image: havalLogo,
       rating: 5,
       review: "Good service 👍 keep it up. Nice job…"
     },
     {
       id: 4,
       name: "Bazil Khan",
-      image: havalLogo,
       rating: 5,
       review: "We have been in the loop with Master Chillers for the past few years, and they provide top-notch services in Lahore and Islamabad. We are very satisfied with their product and round-the-clock services."
     },
     {
       id: 5,
       name: "Ahmed Saad",
-      image: havalLogo,
       rating: 5,
       review: "Great dealing and overall a pleasant experience working with them."
     }
@@ -85,11 +79,22 @@ const ClientReviewSection = () => {
             >
               <div className="bg-gray-800 rounded-xl p-5 w-[280px] min-h-[380px] flex flex-col items-center">
                 <motion.div className="mb-4 text-center">
-                  <img
-                    src={reviews[currentIndex].image}
-                    alt={reviews[currentIndex].name}
-                    className="w-16 h-16 rounded-full mx-auto mb-3 object-cover"
-                  />
+                  <div className="w-16 h-16 rounded-full mx-auto mb-3 bg-slate-700 flex items-center justify-center">
+                    <svg
+                      className="w-10 h-10 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      />
+                    </svg>
+                  </div>
                   <h3 className="text-lg text-white font-semibold">{reviews[currentIndex].name}</h3>
                 </motion.div>
 
@@ -125,11 +130,22 @@ const ClientReviewSection = () => {
                     className="bg-gray-800 rounded-xl p-5 w-[280px] min-h-[380px] flex flex-col items-center"
                   >
                     <motion.div className="mb-4 text-center">
-                      <img
-                        src={review.image}
-                        alt={review.name}
-                        className="w-16 h-16 rounded-full mx-auto mb-3 object-cover"
-                      />
+                      <div className="w-16 h-16 rounded-full mx-auto mb-3 bg-slate-700 flex items-center justify-center">
+                        <svg
+                          className="w-10 h-10 text-gray-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                          />
+                        </svg>
+                      </div>
                       <h3 className="text-lg text-white font-semibold">{review.name}</h3>
                     </motion.div>
 

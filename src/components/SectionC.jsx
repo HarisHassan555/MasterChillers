@@ -233,6 +233,7 @@ const SectionC = ({ sectionCRef }) => {
                       required
                     >
                       <option value="chiller">Chiller Rental</option>
+                      <option value="cabinet">Rental Cabinet</option>
                       <option value="generator">Soundless Generator</option>
                       <option value="marquee">Outdoor Marquee</option>
                     </select>

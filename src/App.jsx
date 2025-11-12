@@ -11,15 +11,22 @@ import Admin from "./components/Admin";
 import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from './components/NotFound';
-import Countdown from './components/Countdown';
+import Loader from "./components/Loader";
+import { db } from "./firebase/config";
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 function AppContent() {
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('hero');
   const heroRef = useRef(null);
   const sectionARef = useRef(null);
   const sectionBRef = useRef(null);
   const sectionCRef = useRef(null);
+  const originalOverflow = useRef({
+    body: null,
+    html: null
+  });
 
   const refs = {
     heroRef,
@@ -59,12 +66,62 @@ function AppContent() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Show countdown only on main route
-  const showCountdown = location.pathname === '/';
+  useEffect(() => {
+    setIsLoading(true);
+    const timeoutId = setTimeout(() => setIsLoading(false), 2000);
+
+    return () => clearTimeout(timeoutId);
+  }, [location.pathname]);
+
+  // Track page visits (only on main page, not admin/login)
+  useEffect(() => {
+    if (location.pathname === '/' && !isLoading) {
+      const trackVisit = async () => {
+        try {
+          await addDoc(collection(db, 'visits'), {
+            timestamp: serverTimestamp(),
+            path: location.pathname,
+            userAgent: navigator.userAgent,
+            referrer: document.referrer || 'direct'
+          });
+        } catch (error) {
+          console.error('Error tracking visit:', error);
+          // Silently fail - don't interrupt user experience
+        }
+      };
+      
+      // Small delay to ensure page is loaded
+      const visitTimeout = setTimeout(trackVisit, 1000);
+      return () => clearTimeout(visitTimeout);
+    }
+  }, [location.pathname, isLoading]);
+
+  useEffect(() => {
+    const bodyStyle = document.body.style;
+    const htmlStyle = document.documentElement.style;
+
+    if (originalOverflow.current.body === null) {
+      originalOverflow.current.body = bodyStyle.overflow || '';
+    }
+
+    if (originalOverflow.current.html === null) {
+      originalOverflow.current.html = htmlStyle.overflow || '';
+    }
+
+    // Always restore scrollbar - don't hide it during loading
+    // The loader overlay will still be visible but users can scroll if needed
+    bodyStyle.overflow = originalOverflow.current.body;
+    htmlStyle.overflow = originalOverflow.current.html;
+
+    return () => {
+      bodyStyle.overflow = originalOverflow.current.body;
+      htmlStyle.overflow = originalOverflow.current.html;
+    };
+  }, []);
 
   return (
     <>
-      {showCountdown && <Countdown />}
+      {isLoading && <Loader />}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route
@@ -86,7 +143,7 @@ function AppContent() {
               />
               <HeroSection heroRef={heroRef} />
               <SectionA sectionARef={sectionARef} />
-              <SectionB sectionBRef={sectionBRef} />
+              <SectionB sectionBRef={sectionBRef} sectionCRef={sectionCRef} />
               <SectionC sectionCRef={sectionCRef} />
               <Footer />
             </>

@@ -36,7 +36,7 @@ const HeroSection = ({ heroRef }) => {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden bg-slate-900"
     >
       {/* Background Image */}
       <div 

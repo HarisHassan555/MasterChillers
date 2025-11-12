@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow authenticated users to read/write submissions
+    match /submissions/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Allow anyone to write visits (for tracking), but only authenticated admins can read
+    match /visits/{document=**} {
+      allow write: if true;
+      allow read: if request.auth != null;
+    }
+    
+    // Deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

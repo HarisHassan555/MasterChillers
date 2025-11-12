@@ -9,11 +9,17 @@
   --accent: #38BDF8;     /* Light blue - accents */
   --accent-red: #EF4444; /* Red accent color */
   --accent-red-dark: #DC2626; /* Darker red for hover states */
+  --landing-gradient: linear-gradient(135deg, rgba(239, 68, 68, 0.92) 0%, rgba(15, 23, 42, 0.94) 45%, rgba(56, 189, 248, 0.92) 100%);
 }
 
 @layer base {
   body {
     @apply bg-slate-900 text-gray-100;
+    scrollbar-gutter: stable;
+  }
+  
+  html {
+    scrollbar-gutter: stable;
   }
 }
 
@@ -84,6 +90,28 @@
 
 .animate-pulse {
   animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes logo-blink {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(0.985);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.01);
+  }
+}
+
+.animate-logo-blink {
+  animation: logo-blink 2.6s ease-in-out infinite;
+}
+
+.landing-gradient {
+  background-image: var(--landing-gradient);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* Custom Scrollbar */
