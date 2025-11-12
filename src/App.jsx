@@ -66,33 +66,71 @@ function AppContent() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Show loader until page is fully loaded
   useEffect(() => {
     setIsLoading(true);
-    const timeoutId = setTimeout(() => setIsLoading(false), 2000);
+    
+    const handleLoad = () => {
+      setIsLoading(false);
+    };
 
-    return () => clearTimeout(timeoutId);
+    // Check if page is already loaded
+    if (document.readyState === 'complete') {
+      setIsLoading(false);
+    } else {
+      // Wait for page to fully load
+      window.addEventListener('load', handleLoad);
+    }
+
+    return () => {
+      window.removeEventListener('load', handleLoad);
+    };
   }, [location.pathname]);
 
-  // Track page visits (only on main page, not admin/login)
+  // Track sessions (only on main page, not admin/login)
   useEffect(() => {
     if (location.pathname === '/' && !isLoading) {
-      const trackVisit = async () => {
+      const trackSession = async () => {
         try {
-          await addDoc(collection(db, 'visits'), {
-            timestamp: serverTimestamp(),
-            path: location.pathname,
-            userAgent: navigator.userAgent,
-            referrer: document.referrer || 'direct'
-          });
+          // Check if we have an active session
+          const sessionId = sessionStorage.getItem('sessionId');
+          const sessionStart = sessionStorage.getItem('sessionStart');
+          const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes in milliseconds
+          
+          const now = Date.now();
+          let currentSessionId = sessionId;
+          
+          // Create new session if:
+          // 1. No session exists
+          // 2. Session expired (30 minutes of inactivity)
+          if (!sessionId || !sessionStart || (now - parseInt(sessionStart)) > SESSION_TIMEOUT) {
+            // Generate new session ID
+            currentSessionId = `session_${now}_${Math.random().toString(36).substr(2, 9)}`;
+            sessionStorage.setItem('sessionId', currentSessionId);
+            sessionStorage.setItem('sessionStart', now.toString());
+            
+            // Track new session in Firestore
+            await addDoc(collection(db, 'visits'), {
+              timestamp: serverTimestamp(),
+              sessionId: currentSessionId,
+              path: location.pathname,
+              userAgent: navigator.userAgent,
+              referrer: document.referrer || 'direct',
+              type: 'session_start'
+            });
+          } else {
+            // Update session activity time
+            sessionStorage.setItem('sessionStart', now.toString());
+          }
         } catch (error) {
-          console.error('Error tracking visit:', error);
+          console.error('Error tracking session:', error);
           // Silently fail - don't interrupt user experience
         }
       };
       
       // Small delay to ensure page is loaded
-      const visitTimeout = setTimeout(trackVisit, 1000);
-      return () => clearTimeout(visitTimeout);
+      const sessionTimeout = setTimeout(trackSession, 1000);
+      return () => clearTimeout(sessionTimeout);
     }
   }, [location.pathname, isLoading]);
 

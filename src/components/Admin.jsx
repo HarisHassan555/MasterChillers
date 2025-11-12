@@ -125,24 +125,43 @@ const Admin = () => {
       monthAgo.setMonth(monthAgo.getMonth() - 1);
       monthAgo.setHours(0, 0, 0, 0);
       
-      // Calculate visit statistics
-      const visitsToday = visits.filter(v => {
-        const visitDate = new Date(v.date);
-        visitDate.setHours(0, 0, 0, 0);
-        return visitDate.getTime() === today.getTime();
-      }).length;
+      // Calculate unique sessions (count by sessionId)
+      const uniqueSessions = new Set(visits.map(v => v.sessionId).filter(id => id));
+      const totalSessions = uniqueSessions.size;
       
-      const visitsThisWeek = visits.filter(v => {
-        const visitDate = new Date(v.date);
-        visitDate.setHours(0, 0, 0, 0);
-        return visitDate.getTime() >= weekAgo.getTime();
-      }).length;
+      // Get unique sessions for each time period
+      const sessionsToday = new Set(
+        visits
+          .filter(v => {
+            const visitDate = new Date(v.date);
+            visitDate.setHours(0, 0, 0, 0);
+            return visitDate.getTime() === today.getTime();
+          })
+          .map(v => v.sessionId)
+          .filter(id => id)
+      ).size;
       
-      const visitsThisMonth = visits.filter(v => {
-        const visitDate = new Date(v.date);
-        visitDate.setHours(0, 0, 0, 0);
-        return visitDate.getTime() >= monthAgo.getTime();
-      }).length;
+      const sessionsThisWeek = new Set(
+        visits
+          .filter(v => {
+            const visitDate = new Date(v.date);
+            visitDate.setHours(0, 0, 0, 0);
+            return visitDate.getTime() >= weekAgo.getTime();
+          })
+          .map(v => v.sessionId)
+          .filter(id => id)
+      ).size;
+      
+      const sessionsThisMonth = new Set(
+        visits
+          .filter(v => {
+            const visitDate = new Date(v.date);
+            visitDate.setHours(0, 0, 0, 0);
+            return visitDate.getTime() >= monthAgo.getTime();
+          })
+          .map(v => v.sessionId)
+          .filter(id => id)
+      ).size;
       
       // Calculate submission statistics
       const submissionsToday = currentSubmissions.filter(sub => {
@@ -210,21 +229,24 @@ const Admin = () => {
         const now = new Date();
 
         if (period === 'today') {
-          // Hourly data for today
+          // Hourly data for today - count unique sessions per hour
           labels = Array.from({ length: 24 }, (_, i) => {
             const hour = new Date(now);
             hour.setHours(i, 0, 0, 0);
             return hour.toLocaleTimeString('en-US', { hour: 'numeric', hour12: true });
           });
           
-          visitsData = Array(24).fill(0);
+          // Count unique sessions per hour
+          const sessionsPerHour = Array(24).fill(null).map(() => new Set());
           visits.forEach(v => {
+            if (!v.sessionId) return;
             const visitDate = new Date(v.date);
             const hour = visitDate.getHours();
             if (visitDate.toDateString() === now.toDateString()) {
-              visitsData[hour]++;
+              sessionsPerHour[hour].add(v.sessionId);
             }
           });
+          visitsData = sessionsPerHour.map(sessionSet => sessionSet.size);
 
           submissionsData = Array(24).fill(0);
           currentSubmissions.forEach(sub => {
@@ -241,22 +263,25 @@ const Admin = () => {
             } catch (e) {}
           });
         } else if (period === 'week') {
-          // Daily data for last 7 days
+          // Daily data for last 7 days - count unique sessions per day
           labels = Array.from({ length: 7 }, (_, i) => {
             const date = new Date(now);
             date.setDate(date.getDate() - (6 - i));
             return date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric' });
           });
           
-          visitsData = Array(7).fill(0);
+          // Count unique sessions per day
+          const sessionsPerDay = Array(7).fill(null).map(() => new Set());
           visits.forEach(v => {
+            if (!v.sessionId) return;
             const visitDate = new Date(v.date);
             visitDate.setHours(0, 0, 0, 0);
             const daysDiff = Math.floor((now - visitDate) / (1000 * 60 * 60 * 24));
             if (daysDiff >= 0 && daysDiff < 7) {
-              visitsData[6 - daysDiff]++;
+              sessionsPerDay[6 - daysDiff].add(v.sessionId);
             }
           });
+          visitsData = sessionsPerDay.map(sessionSet => sessionSet.size);
 
           submissionsData = Array(7).fill(0);
           currentSubmissions.forEach(sub => {
@@ -275,22 +300,25 @@ const Admin = () => {
             } catch (e) {}
           });
         } else {
-          // Daily data for last 30 days
+          // Daily data for last 30 days - count unique sessions per day
           labels = Array.from({ length: 30 }, (_, i) => {
             const date = new Date(now);
             date.setDate(date.getDate() - (29 - i));
             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
           });
           
-          visitsData = Array(30).fill(0);
+          // Count unique sessions per day
+          const sessionsPerDay = Array(30).fill(null).map(() => new Set());
           visits.forEach(v => {
+            if (!v.sessionId) return;
             const visitDate = new Date(v.date);
             visitDate.setHours(0, 0, 0, 0);
             const daysDiff = Math.floor((now - visitDate) / (1000 * 60 * 60 * 24));
             if (daysDiff >= 0 && daysDiff < 30) {
-              visitsData[29 - daysDiff]++;
+              sessionsPerDay[29 - daysDiff].add(v.sessionId);
             }
           });
+          visitsData = sessionsPerDay.map(sessionSet => sessionSet.size);
 
           submissionsData = Array(30).fill(0);
           currentSubmissions.forEach(sub => {
@@ -316,11 +344,11 @@ const Admin = () => {
       const chartData = getChartData(timePeriod);
 
       setAnalyticsData({
-        // Visit statistics
-        totalVisits: visits.length,
-        visitsToday,
-        visitsThisWeek,
-        visitsThisMonth,
+        // Session statistics (unique sessions)
+        totalVisits: totalSessions,
+        visitsToday: sessionsToday,
+        visitsThisWeek: sessionsThisWeek,
+        visitsThisMonth: sessionsThisMonth,
         // Submission statistics
         totalSubmissions: currentSubmissions.length,
         submissionsToday,
@@ -588,7 +616,7 @@ const Admin = () => {
             {/* Summary Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-                <h3 className="text-sm font-semibold text-gray-400 mb-2 uppercase tracking-wide">Total Visits</h3>
+                <h3 className="text-sm font-semibold text-gray-400 mb-2 uppercase tracking-wide">Total Sessions</h3>
                 <p className="text-3xl font-bold text-white">{analyticsData?.totalVisits || 0}</p>
                 <p className="text-xs text-gray-500 mt-1">
                   {timePeriod === 'today' && `${analyticsData?.visitsToday || 0} today`}
@@ -612,7 +640,7 @@ const Admin = () => {
                     ? ((analyticsData?.totalSubmissions / analyticsData?.totalVisits) * 100).toFixed(1)
                     : 0}%
                 </p>
-                <p className="text-xs text-gray-500 mt-1">Submissions per visit</p>
+                <p className="text-xs text-gray-500 mt-1">Submissions per session</p>
               </div>
               <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
                 <h3 className="text-sm font-semibold text-gray-400 mb-2 uppercase tracking-wide">Popular Service</h3>
@@ -627,16 +655,16 @@ const Admin = () => {
 
             {/* Charts */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Visits Chart */}
+              {/* Sessions Chart */}
               <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-                <h3 className="text-xl font-bold text-white mb-4">Page Visits</h3>
+                <h3 className="text-xl font-bold text-white mb-4">Sessions</h3>
                 {analyticsData?.chartData ? (
                   <Line
                     data={{
                       labels: analyticsData.chartData.labels,
                       datasets: [
                         {
-                          label: 'Visits',
+                          label: 'Sessions',
                           data: analyticsData.chartData.visitsData,
                           borderColor: 'rgb(59, 130, 246)',
                           backgroundColor: 'rgba(59, 130, 246, 0.1)',
