@@ -355,7 +355,7 @@ const ContactContent = ({ type }) => {
         <div className=" flex flex-col gap-2">
         
         <a href="tel:+923214260222" className="text-gray-300 hover:text-sky-400 transition-colors duration-300">
-          +92 3214849700
+          +92 3214260222
         </a>
          <a href="tel:+923394849700" className="text-gray-300 hover:text-sky-400 transition-colors duration-300">
          +92 3394849700
