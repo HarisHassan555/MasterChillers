@@ -4,6 +4,7 @@ import { db } from '../firebase/config';
 import { collection, query, orderBy, getDocs } from 'firebase/firestore';
 import { getAuth, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import BlogManager from './BlogManager';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -36,7 +37,7 @@ const Admin = () => {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('submissions'); // 'submissions' or 'analytics'
+  const [activeTab, setActiveTab] = useState('submissions'); // 'submissions', 'analytics' or 'blog'
   const [analyticsData, setAnalyticsData] = useState(null);
   const [selectedSubmission, setSelectedSubmission] = useState(null);
   const [timePeriod, setTimePeriod] = useState('month'); // 'today', 'week', 'month'
@@ -371,7 +372,7 @@ const Admin = () => {
       try {
       if (activeTab === 'submissions') {
         await fetchSubmissions();
-      } else {
+      } else if (activeTab === 'analytics') {
         await fetchAnalytics();
       }
       } catch (err) {
@@ -543,6 +544,16 @@ const Admin = () => {
           >
             Analytics
           </button>
+          <button
+            onClick={() => setActiveTab('blog')}
+            className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+              activeTab === 'blog'
+                ? 'bg-red-500 text-white'
+                : 'bg-slate-800 text-gray-300 hover:bg-slate-700'
+            }`}
+          >
+            Blog
+          </button>
         </div>
 
         {error && (
@@ -592,7 +603,7 @@ const Admin = () => {
               </div>
             )}
           </div>
-        ) : (
+        ) : activeTab === 'analytics' ? (
           <div className="space-y-6">
             {/* Time Period Toggle */}
             <div className="flex justify-center mb-6">
@@ -898,6 +909,8 @@ const Admin = () => {
               </div>
             </div>
           </div>
+        ) : (
+          <BlogManager />
         )}
       </div>
     </div>

@@ -12,6 +12,7 @@ import Login from "./components/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from './components/NotFound';
 import Loader from "./components/Loader";
+import Blogs from "./components/Blogs";
 import { db } from "./firebase/config";
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
@@ -187,6 +188,7 @@ function AppContent() {
             </>
           }
         />
+        <Route path="/blogs" element={<Blogs />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
