@@ -46,6 +46,12 @@ const Footer = () => {
         {/* Legal Links */}
         <div className="flex space-x-6 text-sm">
           <a
+            href="/blogs"
+            className="text-gray-400 hover:text-blue-400 transition-colors"
+          >
+            Blogs
+          </a>
+          <a
             href="/privacy"
             className="text-gray-400 hover:text-blue-400 transition-colors"
           >
