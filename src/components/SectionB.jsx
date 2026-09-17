@@ -9,19 +9,29 @@ import sapphireLogo from '../assets/sapphireLogo.png';
 import highnoonLogo from '../assets/highnoonLogo.png';
 import dhlLogo from '../assets/dhlLogo.png';
 import pepsicoLogo from '../assets/pepsicoLogo.jpeg';
+import styleLogo from '../assets/styleLogo.png';
+import bergerPaintLogo from '../assets/bergerpaintLogo.jpg';
+import sapphireHomeLogo from '../assets/SapphirehomeLogo.jpg';
+import designtexLogo from '../assets/designtexLogo.jpg';
+import nishatLinenLogo from '../assets/nishatlininLogo.jpg';
 import ClientReviewSection from './ClientReviewSection';
 
 const SectionB = ({ sectionBRef, sectionCRef }) => {
   const logos = [
     { src: outfittersLogo, alt: 'Outfitters Logo' },
-    { src: sazgarLogo, alt: 'Sazgar Logo' },
-    { src: tcsLogo, alt: 'TCS Logo' },
+    { src: sazgarLogo, alt: 'Sazgar Logo', scale: 1.35 },
+    { src: tcsLogo, alt: 'TCS Logo', scale: 1.35 },
     { src: nishatLogo, alt: 'Nishat Logo' },
     { src: lepardsLogo, alt: 'Lepards Logo' },
-    { src: sapphireLogo, alt: 'Sapphire Logo' },
+    { src: sapphireLogo, alt: 'Sapphire Logo', scale: 1.35 },
     { src: highnoonLogo, alt: 'Highnoon Logo' },
     { src: dhlLogo, alt: 'DHL Logo' },
     { src: pepsicoLogo, alt: 'Pepsico Logo' },
+    { src: styleLogo, alt: 'Style Textile Logo' },
+    { src: bergerPaintLogo, alt: 'Berger Paint Logo' },
+    { src: sapphireHomeLogo, alt: 'Sapphire Home Logo', scale: 1.48 },
+    { src: designtexLogo, alt: 'DesignTex by Sapphire Logo', scale: 1.48 },
+    { src: nishatLinenLogo, alt: 'Nishat Linen Logo' },
   ];
 
   // Calculate total width for animation
@@ -64,12 +74,13 @@ const SectionB = ({ sectionBRef, sectionCRef }) => {
             {logos.map((logo, index) => (
               <motion.div
                 key={`row1-${index}`}
-                className="flex-shrink-0 bg-white rounded-lg p-4 w-40 h-28 flex items-center justify-center"
+                className="flex-shrink-0 bg-white rounded-lg p-4 w-40 h-28 flex items-center justify-center overflow-hidden"
               >
                 <img
                   src={logo.src}
                   alt={logo.alt}
-                  className="max-w-full max-h-full object-contain"
+                  className={`${logo.scale ? 'w-full h-full' : 'max-w-full max-h-full'} object-contain`}
+                  style={{ transform: `scale(${logo.scale || 1})` }}
                 />
               </motion.div>
             ))}
@@ -91,12 +102,13 @@ const SectionB = ({ sectionBRef, sectionCRef }) => {
             {logos.map((logo, index) => (
               <motion.div
                 key={`row2-${index}`}
-                className="flex-shrink-0 bg-white rounded-lg p-4 w-40 h-28 flex items-center justify-center"
+                className="flex-shrink-0 bg-white rounded-lg p-4 w-40 h-28 flex items-center justify-center overflow-hidden"
               >
                 <img
                   src={logo.src}
                   alt={logo.alt}
-                  className="max-w-full max-h-full object-contain"
+                  className={`${logo.scale ? 'w-full h-full' : 'max-w-full max-h-full'} object-contain`}
+                  style={{ transform: `scale(${logo.scale || 1})` }}
                 />
               </motion.div>
             ))}

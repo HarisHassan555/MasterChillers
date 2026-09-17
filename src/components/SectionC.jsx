@@ -365,8 +365,8 @@ const ContactContent = ({ type }) => {
       );
     case 'Email':
       return (
-        <a href="mailto:masterchiller2001@gmail.com" className="text-gray-300 hover:text-sky-400 transition-colors duration-300">
-          masterchiller2001@gmail.com
+        <a href="mailto:info@masterchiller.pk" className="text-gray-300 hover:text-sky-400 transition-colors duration-300">
+          info@masterchiller.pk
         </a>
       );
     case 'Hours':
